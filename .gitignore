@@ -13,3 +13,5 @@ __pycache__/
 worktmp/
 private/
 config/qualifications.yaml
+
+docs/es/
