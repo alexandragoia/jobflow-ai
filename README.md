@@ -1,32 +1,31 @@
 # JobFlow AI
 
-### Un buscador de empleo con criterios claros y decisiones explicables
+### Jobsuche mit klaren Kriterien und nachvollziehbarer Bewertung
 
-Proyecto personal de portfolio con **Python · FastAPI · SQLAlchemy · SQLite · JavaScript · HTML/CSS**.
+Persönliches Portfolio-Projekt mit **Python · FastAPI · SQLAlchemy · SQLite · JavaScript · HTML/CSS**.
 
-[English](README.en.md) · [Arquitectura](docs/architecture.md) · [Demostración](docs/demo.md) · [Texto para CV](docs/cv.md)
+[Architektur](docs/architecture.md) · [Demo-Anleitung](docs/demo.md) · [Text für den Lebenslauf](docs/cv.md) · [Datenmodell](DATA_MODEL.md)
 
+## Ausgangspunkt
 
-## El problema
+Eine Suche nach Stichwörtern liefert häufig Stellenanzeigen, die einen Beruf erwähnen, aber nicht zum gesuchten Tätigkeitsbereich passen. Angaben zu Arbeitszeiten, Sprachkenntnissen, Erfahrung oder Standort können fehlen. JobFlow verbindet ausdrückliche Filter, Übereinstimmungen im Stellentitel und eine nachvollziehbare Bewertung. Die Entscheidung trifft die arbeitssuchende Person.
 
-Una búsqueda por palabras clave devuelve ofertas que pueden mencionar una profesión sin corresponder a ella. Además, faltan datos sobre horario, idioma, experiencia o ubicación. JobFlow combina filtros explícitos, coincidencias de puesto y puntuación explicable para ayudar a revisar candidatos. La decisión final queda en manos de la persona que busca trabajo.
+## Funktionen
 
-## Qué hace
+- Stellenanzeigen über die Adzuna-API abrufen und Angaben, Datumswerte und Identitäten vereinheitlichen.
+- Dubletten zusammenführen und dabei Links sowie Rückmeldungen erhalten.
+- Ausschlusskriterien, persönliche Präferenzen und unbekannte Angaben getrennt behandeln.
+- Übereinstimmungen im Stellentitel priorisieren; nach Relevanz oder Veröffentlichungsdatum sortieren.
+- Vollzeit, Teilzeit und ausdrücklich genannte Minijobs berücksichtigen.
+- Interesse, Favoriten, Ablehnungsgründe und bedingte Interessenbekundungen speichern.
+- Suchfilter im Browser merken und Zähler für die einzelnen Kategorien anzeigen.
+- Kleine Änderungen der Bewertungsgewichte aus Rückmeldungen vorschlagen. Änderungen müssen bestätigt werden und können rückgängig gemacht werden.
+- Ausgewählte Anzeigenauszüge optional mit OpenAI analysieren. Vor der Bestätigung werden benötigte Anfragen und das verbleibende lokale Kontingent angezeigt.
+- KI-Ausgaben als JSON validieren und Zitate mit dem Anzeigentext abgleichen. Bei Fehlern bleibt die lokale Auswertung verfügbar.
 
-- Busca ofertas mediante la API de Adzuna y normaliza campos, fechas e identidad.
-- Agrupa duplicados conservando enlaces y valoraciones.
-- Separa exclusiones, preferencias y datos desconocidos.
-- Prioriza coincidencias del título; permite ordenar por relevancia o fecha.
-- Incluye Vollzeit, Teilzeit y detección explícita de Minijob.
-- Guarda interés, favoritos, descartes, motivos y explicaciones condicionales.
-- Recuerda filtros en el navegador y muestra contadores por categoría.
-- Propone cambios de puntuación a partir de las valoraciones; requieren aceptación y se pueden deshacer.
-- Analiza extractos seleccionados con OpenAI, opcionalmente. Antes de confirmar muestra las consultas necesarias y el cupo local restante.
-- Valida el JSON de la IA y comprueba que las citas aparecen en el anuncio. Un fallo conserva la extracción local.
+## Demo ohne API-Schlüssel oder API-Kosten
 
-## Probar sin claves ni costes de API
-
-Requisitos: **Python 3.11 o posterior**. Desde la carpeta del proyecto:
+Voraussetzung: **Python ab Version 3.11**. Im Projektordner:
 
 ```bash
 python -m venv .venv
@@ -46,56 +45,59 @@ python -m venv .venv
 .venv/bin/python demo.py
 ```
 
-Abrir **http://127.0.0.1:8799/** y pulsar **Buscar oportunidades**. La demo utiliza ofertas sintéticas, almacenamiento separado y extracción local. Se pueden explorar filtros, motivos, favoritos, puntuación e historial. No consulta Adzuna ni OpenAI; las funciones de IA real necesitan configuración aparte.
+Anschließend **http://127.0.0.1:8799/** öffnen und die Suche starten. Die Demo verwendet erfundene Stellenanzeigen, einen getrennten Datenspeicher und die lokale Auswertung. Filter, Favoriten, Ablehnungsgründe, Bewertungen und der Verlauf lassen sich erkunden. Es werden keine Anfragen an Adzuna oder OpenAI gesendet.
 
-## Integraciones reales, opcionales
+**Sprachstand:** Die Projektbeschreibung und Dokumentation sind auf Deutsch. Die Benutzeroberfläche der ursprünglichen Anwendung ist derzeit auf Spanisch.
 
-1. Copiar `.env.example` a `.env`.
-2. Configurar las credenciales de Adzuna; configurar OpenAI solo si se desea usar IA.
-3. Ejecutar `python run.py` con el entorno virtual activado.
-4. Activar IA en Ajustes y seleccionar anuncios antes de confirmar el análisis.
+## Optionale Anbindung an externe Dienste
 
-Las claves se utilizan en el servidor. `.env`, bases de datos, titulaciones personales, contraseñas y copias privadas están excluidos del repositorio. Los servicios externos tienen sus propias condiciones, cuotas y facturación. El resto de portales del catálogo son enlaces de búsqueda, no fuentes importadas.
+1. `.env.example` nach `.env` kopieren.
+2. Eigene Adzuna-Zugangsdaten eintragen. OpenAI nur bei gewünschter KI-Nutzung konfigurieren.
+3. In der aktivierten virtuellen Umgebung `python run.py` ausführen.
+4. Die KI in den Einstellungen aktivieren und vor der Analyse die gewünschten Anzeigen auswählen.
 
-## Diseño técnico
+Schlüssel werden auf dem Server verwendet. `.env`, Datenbanken, persönliche Qualifikationen, Passwörter und private Sicherungskopien sind vom Repository ausgeschlossen. Externe Dienste haben eigene Nutzungsbedingungen, Kontingente und Preise. Weitere Portale im Katalog werden als Suchlinks angeboten.
+
+## Technischer Aufbau
 
 ```mermaid
 flowchart LR
-    UI[Interfaz HTML y JavaScript] --> API[FastAPI y validación Pydantic]
-    API --> Source[Conector Adzuna / datos sintéticos]
-    Source --> Normalize[Normalización y duplicados]
-    Normalize --> Filters[Filtros explícitos]
-    Filters --> Analysis[Extracción local / OpenAI opcional]
-    Analysis --> Rank[Puntuación y evidencia]
+    UI[HTML- und JavaScript-Oberfläche] --> API[FastAPI und Pydantic-Validierung]
+    API --> Source[Adzuna-Anbindung / Beispieldaten]
+    Source --> Normalize[Normalisierung und Dubletten]
+    Normalize --> Filters[Ausdrückliche Filter]
+    Filters --> Analysis[Lokale Auswertung / optionale KI]
+    Analysis --> Rank[Bewertung und Textbelege]
     Rank --> DB[(SQLite)]
     DB --> UI
-    UI --> Feedback[Valoraciones y motivos]
-    Feedback --> Suggestions[Propuestas revisables de pesos]
+    UI --> Feedback[Rückmeldungen und Gründe]
+    Feedback --> Suggestions[Überprüfbare Gewichtungsvorschläge]
 ```
 
-La especificación y las decisiones de producto se desarrollaron a partir de una necesidad personal, con asistencia de IA para implementar el código. El proyecto muestra integración de APIs, modelado de datos, reglas explicables y diseño de una interfaz; no se presenta como desarrollo manual sin asistencia ni como un sistema de contratación automática.
+Anforderungen und Produktentscheidungen entstanden aus einer persönlichen Suche nach Arbeit. Der Code wurde mit KI-Unterstützung entwickelt. Das Projekt veranschaulicht API-Anbindung, Datenmodellierung, nachvollziehbare Regeln und die Gestaltung einer Benutzeroberfläche.
 
-## Límites conocidos
+## Bekannte Grenzen
 
-- El origen de esta versión es el código postal 44145, Dortmund, con radio de 0–10 km.
-- Adzuna devuelve extractos parciales y se revisan hasta 50 candidatos por búsqueda. No hay cobertura completa garantizada.
-- Los centroides geográficos se muestran como estimaciones; no confirman distancia exacta.
-- El aprendizaje propone ajustes de reglas; no entrena un modelo personalizado.
-- La aplicación está pensada para una persona. El código de acceso online y persistencia está preparado, pero el despliegue público y su comprobación quedan pendientes.
-- Se incluyen pruebas de lógica y API con datos sintéticos y llamadas simuladas. La existencia de la suite no implica que cada función posterior haya sido validada de extremo a extremo.
+- Ausgangspunkt ist die Postleitzahl 44145 in Dortmund; der Radius ist zwischen 0 und 10 km einstellbar.
+- Adzuna liefert teilweise gekürzte Anzeigentexte. Pro Suche werden bis zu 50 Anzeigen berücksichtigt; eine vollständige Marktabdeckung ist nicht gewährleistet.
+- Geografische Mittelpunkte ergeben geschätzte Entfernungen. Unbekannte Entfernungen bleiben als unbekannt gekennzeichnet.
+- Die Anpassung an Rückmeldungen schlägt Regeländerungen vor. Es wird kein persönliches KI-Modell trainiert.
+- Die Anwendung ist für eine Person ausgelegt. Online-Zugang und dauerhafte Speicherung sind im Code vorbereitet; Veröffentlichung und Prüfung eines Online-Betriebs stehen noch aus.
+- Vorhandene Tests verwenden Beispieldaten und simulierte API-Aufrufe. Die enthaltenen Tests belegen keine vollständige Prüfung sämtlicher später ergänzter Funktionen.
+- Die lokale Demo konnte in der aktuellen Browser-Sitzung nicht geöffnet werden. Deshalb enthält diese Präsentation noch keine Bildschirmfotos der Anwendung.
 
-## Organización
+## Projektstruktur
 
-| Carpeta | Responsabilidad |
+| Ordner | Aufgabe |
 |---|---|
-| `app/` | API, reglas, conectores, persistencia, IA y preferencias |
-| `frontend/` | Interfaz adaptable sin framework de frontend |
-| `config/` | Plantillas y patrones genéricos |
-| `fixtures/` | Datos sintéticos para demo y pruebas |
-| `prompts/` | Instrucciones y esquema de análisis |
-| `tests/` | Pruebas existentes con llamadas de red simuladas |
-| `docs/` | Arquitectura, capturas y presentación |
+| `app/` | API, Regeln, Anbindungen, Speicherung, KI und Präferenzen |
+| `frontend/` | Anpassungsfähige Benutzeroberfläche ohne Frontend-Framework |
+| `config/` | Allgemeine Vorlagen und Erkennungsmuster |
+| `fixtures/` | Erfundene Anzeigen für Demo und Tests |
+| `prompts/` | Analyseanweisungen und Ausgabeschema |
+| `tests/` | Vorhandene Tests mit simulierten Netzwerkaufrufen |
+| `docs/` | Architektur, Demo-Anleitung und Präsentation |
 
-## Créditos
+## Quellen und Danksagung
 
-La integración real atribuye los anuncios a [Adzuna](https://www.adzuna.de/) y conserva sus enlaces. Las coordenadas de referencia del código postal proceden de [GeoNames, DE.zip](https://download.geonames.org/export/zip/DE.zip), bajo [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Los anuncios de la demo son textos ficticios creados para este proyecto.
+Die echte Anbindung kennzeichnet Anzeigen als Inhalte von [Adzuna](https://www.adzuna.de/) und erhält deren Links. Referenzkoordinaten stammen aus [GeoNames, DE.zip](https://download.geonames.org/export/zip/DE.zip), unter [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Die Demo-Anzeigen wurden als erfundene Beispiele für dieses Projekt erstellt.

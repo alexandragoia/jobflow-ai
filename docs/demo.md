@@ -1,14 +1,16 @@
-# Guía de demostración
+# Demo-Anleitung
 
-1. Instalar dependencias siguiendo README.md y ejecutar `demo.py`.
-2. Abrir http://127.0.0.1:8799/ y pulsar Buscar oportunidades.
-3. Revisar la puntuación, sus motivos y los datos desconocidos.
-4. Mostrar las excluidas para revisar las citas que justifican cada filtro.
-5. Cambiar Ordenar por entre relevancia y fecha.
-6. Guardar una oferta y marcar otra como Me interesa. Consultar Mis ofertas y sus contadores; pulsar la misma acción para quitarla.
-7. Descartar una oferta con motivo y nota. Repetir la búsqueda: las ya valoradas o guardadas se omiten.
-8. Consultar historial y ajustes. Las propuestas de pesos requieren suficientes valoraciones; una sola decisión no genera aprendizaje automático.
+1. Abhängigkeiten gemäß README.md installieren und `demo.py` starten.
+2. http://127.0.0.1:8799/ öffnen und „Buscar oportunidades“ (Stellen suchen) anklicken.
+3. Bewertungen, Begründungen und unbekannte Angaben ansehen.
+4. Ausgeschlossene Anzeigen einblenden und die Textbelege für die Filter prüfen.
+5. Unter „Ordenar por“ zwischen Relevanz und Datum wechseln.
+6. Eine Anzeige speichern und eine andere mit „Me interesa“ (Interessiert mich) markieren. „Mis ofertas“ (Meine Stellen) und die Zähler öffnen. Durch erneutes Anklicken derselben Aktion wird die Markierung entfernt.
+7. Eine Anzeige mit Grund und optionaler Notiz ablehnen. Bei einer neuen Suche werden bereits bewertete oder gespeicherte Anzeigen ausgelassen.
+8. Verlauf und Einstellungen ansehen. Gewichtungsvorschläge benötigen mehrere aussagekräftige Rückmeldungen. Eine einzelne Entscheidung trainiert kein Modell.
 
-La banda de demostración identifica los datos ficticios. Las fechas se generan al consultar para que los ejemplos sigan siendo recientes. Se incluye un ejemplo de texto que intenta dar instrucciones a la IA, destinado a mostrar por qué el contenido de un anuncio se trata como datos no confiables.
+Die sichtbare Demo-Kennzeichnung weist auf erfundene Daten hin. Veröffentlichungsdaten werden bei der Suche neu erzeugt, damit die Beispiele aktuell bleiben. Ein Beispiel enthält einen Versuch, der KI Anweisungen zu geben. Es veranschaulicht, warum Anzeigentexte als nicht vertrauenswürdige Daten behandelt werden.
 
-La IA real está desactivada en la demo. Se describe su implementación en la documentación; demostrar una consulta real requiere credenciales y saldo propios. El almacenamiento de demo está en `worktmp/demo`, separado del modo real y excluido de Git.
+Die externe KI ist in der Demo deaktiviert. Eine echte Anfrage erfordert eigene Zugangsdaten und verfügbares Guthaben. Die Demo speichert ihre Daten getrennt unter `worktmp/demo`; dieser Ordner ist von Git ausgeschlossen.
+
+Die ursprüngliche Benutzeroberfläche ist derzeit auf Spanisch. Die Bezeichnungen oben erleichtern die Orientierung. Die Projektbeschreibung und Dokumentation sind auf Deutsch.

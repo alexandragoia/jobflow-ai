@@ -1,32 +1,32 @@
-# Arquitectura y decisiones
+# Architektur und Entscheidungen
 
-FastAPI sirve una interfaz HTML/CSS/JavaScript y endpoints con contratos Pydantic. SQLAlchemy conserva ofertas, fuentes, resultados de búsqueda y valoraciones en SQLite. Configuración y patrones legibles viven en YAML.
+FastAPI stellt eine HTML/CSS/JavaScript-Oberfläche und Endpunkte mit Pydantic-Datenverträgen bereit. SQLAlchemy speichert Anzeigen, Quellen, Suchergebnisse und Rückmeldungen in SQLite. Konfiguration und Erkennungsmuster liegen in lesbaren YAML-Dateien.
 
-## Flujo de una búsqueda
+## Ablauf einer Suche
 
-1. Validar palabras, radio, antigüedad y jornadas.
-2. Obtener candidatos de Adzuna, o de fixtures en la demo.
-3. Normalizar fechas, campos e identidad; conservar datos desconocidos.
-4. Agrupar coincidencias claras y conservar feedback asociado.
-5. Omitir ofertas ya valoradas o guardadas de las búsquedas nuevas.
-6. Aplicar exclusiones solo con información explícita.
-7. Extraer criterios localmente y calcular relevancia y puntuación explicable.
-8. Guardar una instantánea; superponer la valoración actual al consultar historial o biblioteca.
+1. Suchbegriffe, Radius, Alter der Anzeige und Arbeitszeit prüfen.
+2. Anzeigen von Adzuna oder aus den Demo-Beispielen beziehen.
+3. Datumswerte, Felder und Identitäten vereinheitlichen; unbekannte Angaben erhalten.
+4. Eindeutige Dubletten zusammenführen und vorhandene Rückmeldungen übernehmen.
+5. Bereits bewertete oder gespeicherte Anzeigen aus neuen Suchergebnissen auslassen.
+6. Ausschlusskriterien nur auf ausdrückliche Angaben anwenden.
+7. Merkmale lokal erkennen und Relevanz sowie nachvollziehbare Bewertung berechnen.
+8. Eine Momentaufnahme speichern; beim Abrufen von Verlauf oder Sammlung die aktuelle Rückmeldung ergänzen.
 
-## IA opcional
+## Optionale KI
 
-El usuario selecciona ofertas y consulta una vista previa de llamadas nuevas, análisis guardados y límite restante. La API Responses devuelve un contrato estricto de datos y evidencia. Las citas se comprueban contra el título y el extracto. Se cachea por contenido, prompt/esquema y modelo. Si la respuesta es inválida o falla el proveedor, se conserva la extracción local.
+Die Person wählt Anzeigen aus und erhält eine Vorschau mit neuen Anfragen, vorhandenen Analysen und verbleibendem Kontingent. Die Responses-API liefert strukturierte Daten und Textbelege nach einem strikten Schema. Zitate werden gegen Titel und Anzeigenauszug geprüft. Der Cache berücksichtigt Inhalt, Prompt-/Schemaversion und Modell. Bei ungültigen Antworten oder Dienstfehlern bleibt die lokale Auswertung verfügbar.
 
-El anuncio se trata como contenido no confiable. La IA no modifica filtros, ejecuta código ni descarga páginas originales. Validar una cita no demuestra por sí solo que la interpretación sea correcta.
+Anzeigentexte sind nicht vertrauenswürdige Inhalte. Die KI verändert keine Filter, führt keinen Code aus und lädt keine Originalseiten herunter. Ein vorhandenes Zitat allein bestätigt noch nicht die Richtigkeit einer Interpretation.
 
-## Preferencias
+## Präferenzen
 
-Las valoraciones y motivos concretos generan asociaciones locales. Se requieren señales suficientes para proponer un pequeño cambio de peso; aceptar, descartar y deshacer quedan registrados. Guardar por sí solo no significa interés. Una explicación condicional no se interpreta como aprobación de todas las condiciones del anuncio.
+Rückmeldungen und konkrete Gründe erzeugen lokale Zusammenhänge. Erst bei ausreichenden Signalen werden kleine Änderungen der Gewichtung vorgeschlagen. Annahme, Ablehnung und Rücknahme werden gespeichert. Speichern allein bedeutet kein Interesse. Eine bedingte Interessenbekundung gilt nicht als Zustimmung zu allen Bedingungen einer Anzeige.
 
-## Persistencia y seguridad
+## Speicherung und Sicherheit
 
-SQLite y migraciones aditivas conservan datos. El navegador recuerda filtros, no claves. Los enlaces se validan; la interfaz utiliza textContent, CSP, hosts permitidos y comprobación de origen para escrituras. La preparación online añade contraseña derivada con PBKDF2, cookies firmadas, límite de intentos y datos en una carpeta persistente. Necesita comprobación de despliegue antes de uso online.
+SQLite und additive Migrationen erhalten bestehende Daten. Der Browser merkt sich Filter, aber keine API-Schlüssel. Links werden geprüft; die Oberfläche verwendet textContent, eine Content Security Policy, erlaubte Hosts und eine Herkunftsprüfung bei Schreibzugriffen. Für den vorbereiteten Online-Betrieb gibt es PBKDF2-Passwortableitung, signierte Cookies, begrenzte Anmeldeversuche und einen dauerhaften Datenordner. Vor Online-Nutzung muss der konkrete Betrieb überprüft werden.
 
-## Decisiones de alcance
+## Umfang
 
-Se usa un proceso y una base local para mantener sencilla una aplicación de una persona. Las APIs externas tienen timeout, caché y cuotas locales. Los demás portales se identifican como enlaces. La demo sustituye solo la obtención de candidatos; conserva el flujo de normalización, filtrado, valoración y persistencia de la app.
+Ein Prozess und eine lokale Datenbank halten den Betrieb einer persönlichen Anwendung überschaubar. Externe APIs verwenden Zeitlimits, Cache und lokale Kontingente. Weitere Portale sind als Suchlinks gekennzeichnet. Die Demo ersetzt die Beschaffung der Anzeigen und verwendet danach die normale Verarbeitung für Normalisierung, Filter, Bewertungen und Speicherung.

@@ -1,23 +1,17 @@
-# JobFlow AI para el CV
+# JobFlow AI im Lebenslauf
 
-## Español
-
-**JobFlow AI — Proyecto personal de búsqueda de empleo**  
-Aplicación con Python, FastAPI, SQLite y JavaScript que integra Adzuna y análisis opcional con OpenAI. Incluye filtros explícitos, puntuación explicable, deduplicación, favoritos y propuestas de preferencias a partir del feedback. Desarrollo con asistencia de IA.  
-Código y documentación: https://github.com/alexandragoia/jobflow-ai
-
-## Deutsch
+## Kurze Projektbeschreibung
 
 **JobFlow AI — Persönliches Projekt zur Jobsuche**  
-Webanwendung mit Python, FastAPI, SQLite und JavaScript. Integration von Adzuna und optionaler OpenAI-Analyse, nachvollziehbare Bewertung, Filter, Dublettenerkennung und gespeicherte Rückmeldungen. Mit KI-Unterstützung entwickelt.  
+Webanwendung mit Python, FastAPI, SQLite und JavaScript. Anbindung an Adzuna und optionale OpenAI-Analyse, nachvollziehbare Bewertung, Suchfilter, Dublettenerkennung sowie gespeicherte Rückmeldungen und Favoriten. Mit KI-Unterstützung entwickelt.  
 Quellcode und Dokumentation: https://github.com/alexandragoia/jobflow-ai
 
-## English
+## Noch kürzer
 
-**JobFlow AI — Personal job-search project**  
-Python, FastAPI, SQLite and JavaScript application integrating Adzuna and optional OpenAI analysis. Features explicit filters, explainable ranking, deduplication, saved listings and reviewable preference suggestions from user feedback. Developed with AI assistance.  
-Code and documentation: https://github.com/alexandragoia/jobflow-ai
+**JobFlow AI:** Persönliche Anwendung zur Jobsuche mit API-Anbindung, nachvollziehbarer Bewertung und optionaler KI-Analyse. Python, FastAPI, SQLite, JavaScript; mit KI-Unterstützung entwickelt.
 
-## Cómo presentarlo
+## Im Gespräch vorstellen
 
-Explica el problema que querías resolver, los criterios que definiste y una decisión concreta: conservar datos desconocidos, comprobar evidencia o revisar los cambios de preferencias. Presenta únicamente habilidades que puedas explicar. El repositorio permite revisar el código y ejecutar una demo local; no equivale a una web alojada públicamente.
+Den Ausgangspunkt erläutern: unpassende Suchergebnisse und fehlende Angaben in Stellenanzeigen. Anschließend die selbst definierten Kriterien und eine konkrete Produktentscheidung erklären, beispielsweise den Umgang mit unbekannten Daten, die Prüfung von Textbelegen oder die Bestätigung von Gewichtungsänderungen.
+
+Nur Fähigkeiten aufführen, die sich nachvollziehbar erklären lassen. Das Repository enthält den Quellcode und eine Anleitung für eine lokale Demo. Eine öffentlich gehostete Anwendung ist noch nicht verfügbar.

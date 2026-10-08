@@ -1,44 +1,43 @@
-# Modelo de datos
+# Datenmodell
 
-SQLite en `jobflow.db`. Todas las fechas internas se guardan como UTC sin zona en la columna; la API convierte las fechas de publicación a formato ISO de día. No se confunde publicación con recuperación o actualización.
+SQLite speichert die Daten in `jobflow.db`. Interne Datumswerte werden als UTC ohne Zeitzoneninformation in den Spalten gespeichert. Die API gibt Veröffentlichungsdaten im ISO-Tagesformat aus. Veröffentlichung, Abruf und Aktualisierung sind getrennte Angaben.
 
-| Tabla | Contenido |
+| Tabelle | Inhalt |
 |---|---|
-| `sources` | Catálogo, tipo de acceso, estado, última consulta y error |
-| `searches` | Términos, radio, antigüedad, parámetros completos, mensajes y total estimado |
-| `source_runs` | Fuente y búsqueda, hora, éxito/error, cantidad recibida y duración |
-| `api_usage` | Intentos de Adzuna, incluidos los fallidos; endpoint sin claves |
-| `jobs` | Oferta lógica, contenido normalizado, coordenadas y calidad, fecha, jornada, primera/última observación, posible republicación |
-| `job_sources` | Identidad en la fuente, URL original proporcionada, URL de candidatura si consta y fecha de recuperación |
-| `job_aliases` | Identidades agrupadas; permite que los botones de búsquedas antiguas sigan usando la oferta conservada |
-| `search_results` | Relación búsqueda/oferta, estado, motivo de exclusión, citas, puntuación y snapshot JSON |
-| `job_feedback` | Valoración actual, favorito independiente, motivo y nota opcionales |
-| `analysis_cache` | JSON validado por hash de contenido, versión de prompt y nombre del modelo |
-| `search_cache` | Respuesta de búsqueda por hash de parámetros públicos, vigente 15 minutos |
-| `llm_usage` | Intentos de OpenAI para el límite local de 24 horas |
+| `sources` | Quellenkatalog, Zugriffsart, Status, letzter Abruf und Fehler |
+| `searches` | Begriffe, Radius, Alter, vollständige Parameter, Meldungen und geschätzte Gesamtzahl |
+| `source_runs` | Quelle und Suche, Zeitpunkt, Ergebnis, Anzahl und Dauer |
+| `api_usage` | Adzuna-Anfragen einschließlich Fehlern; Endpunkt ohne Schlüssel |
+| `jobs` | Logische Anzeige, vereinheitlichte Inhalte, Koordinaten und Qualität, Datum, Arbeitszeit, erste/letzte Sichtung und mögliche Wiederveröffentlichung |
+| `job_sources` | Identität innerhalb der Quelle, Original-URL, gegebenenfalls Bewerbungs-URL und Abrufdatum |
+| `job_aliases` | Zusammengeführte Identitäten für die Nutzung älterer Suchergebnisse |
+| `search_results` | Zuordnung von Suche und Anzeige, Status, Ausschlussgrund, Zitate, Bewertung und JSON-Momentaufnahme |
+| `job_feedback` | Aktuelle Rückmeldung, unabhängiger Favorit, optionaler Grund und Notiz |
+| `analysis_cache` | Validiertes JSON nach Inhaltshash, Prompt-Version und Modell |
+| `search_cache` | Suchantwort nach Hash der öffentlichen Parameter; 15 Minuten gültig |
+| `llm_usage` | OpenAI-Anfragen für das lokale 24-Stunden-Kontingent |
+| `learning_decisions` | Vorschläge zur Gewichtung, Entscheidung, Textbelege und Rücknahme |
 
-## Identidad y conservación
+## Identität und Erhaltung
 
-`job_sources(source_id, source_job_id)` y `search_results(search_id, job_id)` son únicos. La misma identidad de fuente actualiza su oferta; una URL canónica igual se une a la oferta existente. Se eliminan de la canonicalización solo parámetros conocidos `utm_*` y fragmentos, conservando los parámetros que pueden identificar el anuncio.
+`job_sources(source_id, source_job_id)` und `search_results(search_id, job_id)` sind eindeutig. Eine bekannte Quellenidentität aktualisiert die vorhandene Anzeige. Übereinstimmende kanonische URLs werden derselben Anzeige zugeordnet. Bei der URL-Normalisierung werden bekannte `utm_*`-Parameter und Fragmente entfernt; identifizierende Parameter bleiben erhalten.
 
-Una coincidencia de título, empresa y lugar con texto muy similar y el mismo día puede agruparse en la búsqueda; sus enlaces pasan a la oferta conservada. Con fecha distinta se señala como posible republicación, sin borrar registros. La normalización de empresa es deliberadamente mínima; no se equiparan nombres de entidades diferentes por suposiciones.
+Übereinstimmungen von Titel, Unternehmen und Ort mit sehr ähnlichem Text und gleichem Datum können zusammengeführt werden. Links und Rückmeldungen bleiben erhalten. Bei einem anderen Datum wird eine mögliche Wiederveröffentlichung gekennzeichnet. Unternehmensnamen werden nur vorsichtig normalisiert.
 
-Una exclusión pertenece a su búsqueda: cambiar el radio o un filtro no altera silenciosamente las búsquedas anteriores. El snapshot permite recuperar la explicación que se mostró. El registro de oferta lógica se mantiene y las valoraciones actuales se recuperan por ID, independientemente de la búsqueda.
+Ein Ausschluss gehört zur jeweiligen Suche. Neue Filter ändern frühere Ergebnisse nicht stillschweigend. Die gespeicherte Momentaufnahme erhält die damalige Erklärung; die aktuelle Rückmeldung wird unabhängig davon über die Anzeigenidentität abgerufen.
 
-Al agrupar dos ofertas se conserva un favorito presente en cualquiera de ellas y la valoración vigente más reciente. El ID agrupado queda como alias, por lo que una valoración desde un resultado histórico afecta a la misma oferta lógica y no se pierde por la agrupación.
+Bei Dubletten werden vorhandene Favoriten und die jüngste gültige Rückmeldung übernommen. Frühere Identitäten bleiben als Alias erhalten. Favoriten sind unabhängig von Interesse oder Ablehnung: Das Entfernen einer Rückmeldung löscht keinen Favoriten.
 
-El favorito es independiente del interés/rechazo. Quitar una valoración no elimina el favorito. Los recuentos de motivos corresponden a las valoraciones actuales de rechazo; no hay motor de aprendizaje ni registro de candidaturas.
+## Migrationen und Datenschutz
 
-## Migraciones y privacidad
+`migrations.py` ergänzt fehlende Spalten und wandelt ältere `liked`-Angaben in Interesse oder Ablehnung um. Migrationen sind idempotent und löschen keine Tabellen oder Datensätze. Vor der ersten Aktualisierung entsteht `jobflow.db.bak`.
 
-`migrations.py` añade columnas cuando faltan y convierte las valoraciones antiguas de `liked` a interesado/rechazado. Las migraciones son idempotentes y no eliminan tablas o filas. Antes de la primera actualización se crea `jobflow.db.bak`. También se conservan los resultados de versiones anteriores cuando existe su relación de búsqueda.
+`config/qualifications.yaml` ist optional, lokal und von Git ausgeschlossen. Die öffentliche Vorlage heißt `qualifications.example.yaml`. Auch `.env`, SQLite-Dateien und temporäre Daten sind ausgeschlossen. Tabellen speichern keine Adzuna- oder OpenAI-Schlüssel. Das Qualifikationsprofil wird nicht an den KI-Dienst gesendet.
 
-`config/qualifications.yaml` es opcional, local y excluido de Git. La plantilla pública es `qualifications.example.yaml`. `.env`, SQLite y carpetas de prueba también se excluyen. Ninguna tabla almacena las claves Adzuna/OpenAI. El perfil de titulaciones no se envía al servicio de IA.
+Ältere Suchverläufe können ohne zugeordnete Ergebnisse vorliegen. Fehlende historische Zuordnungen werden nicht erfunden.
 
-El historial antiguo de la Fase 2 puede no tener resultados asociados, porque esa versión todavía no registraba esa relación. No se inventan asociaciones entre ofertas y búsquedas pasadas. Una nueva búsqueda vuelve a relacionar las ofertas recibidas y conserva su identidad/valoración.
+## Entscheidungen zur Gewichtung
 
-## Decisiones de preferencias
+`learning_decisions` enthält Vorschlagsidentität, Kriterium, Richtung, bisheriges und vorgeschlagenes Gewicht, Status (`accepted`, `dismissed`, `undone`), Anzeigen-IDs als Belege und Erstellungsdatum. Die zusätzliche Tabelle verändert keine vorhandenen Rückmeldungen. Bereits angenommene oder rückgängig gemachte Signale gelten als verarbeitet, damit dieselbe Anpassung nicht wiederholt angewendet wird.
 
-`learning_decisions` guarda identificador único de propuesta, criterio, dirección, peso anterior y propuesto, estado (accepted/dismissed/undone), evidencia con IDs de ofertas y fecha de creación. Se crea como tabla adicional al arrancar; no modifica ni borra las valoraciones existentes. Las señales aceptadas o deshechas se consideran consumidas para evitar aplicar varias veces el mismo aprendizaje.
-
-`job_feedback.interest_note` conserva la explicación de un interés o guardado, separada de `note` (rechazo). `interest_conditional` indica si solo interesa una variante o condición; por defecto es falso para valoraciones existentes. Las migraciones añaden ambas columnas sin modificar las notas previas. Los duplicados conservan la explicación y el carácter condicional.
+`job_feedback.interest_note` hält Erklärungen für Interesse oder Speichern getrennt von der Ablehnungsnotiz `note`. `interest_conditional` kennzeichnet Interesse an einer bestimmten Variante oder Bedingung. Beide Felder werden ohne Änderung älterer Notizen ergänzt und bei Dubletten erhalten.
