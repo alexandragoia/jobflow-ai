@@ -1,0 +1,10 @@
+# Optional local profile. Copy to qualifications.yaml only when setting up a fresh project.
+formacion_profesional: []
+estudios_universitarios: []
+carnets_y_licencias: []
+certificados: []
+idiomas:
+  aleman: ""
+  otros: ""
+reconocimiento_extranjero: ""
+unavailable: []

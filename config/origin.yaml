@@ -1,0 +1,6 @@
+postcode: "44145"
+city: "Dortmund"
+latitude: 51.529
+longitude: 7.4802
+coordinate_quality: approximate_postcode_centroid
+source: "GeoNames Germany postal-code dataset (DE.zip), CC BY 4.0"

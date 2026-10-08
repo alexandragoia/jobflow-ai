@@ -1,0 +1,56 @@
+location:
+  postcode: '44145'
+  city: Dortmund
+  radius_km: 10
+  maximum_radius_km: 10
+  max_job_age_days: 7
+search:
+  max_keywords: 20
+  results_per_source: 20
+  default_keywords:
+  - Bürohilfe
+  - Datenerfassung
+  - Alltagsbegleiter
+privacy:
+  single_user: true
+  local_only: true
+hard_rules:
+  night_shift: true
+  three_shift: true
+  german_too_high: true
+  outside_radius: true
+  too_old: true
+  call_center_sales: true
+  employment_type: true
+  mandatory_qualification: false
+weights:
+  keyword_title: 12
+  keyword_description: 5
+  full_time: 10
+  part_time: -4
+  daytime: 12
+  two_shift: -5
+  office: 12
+  data: 12
+  coordination: 10
+  quereinsteiger: 12
+  training: 8
+  low_contact: 10
+  high_contact: -18
+  hybrid: 10
+  remote: 10
+  phone_3: -10
+  phone_4_5: -22
+  physical_high: -22
+  reception: -18
+  cleaning: -22
+  warehouse: -20
+  sales: -18
+  weekend: -5
+  qualification: -12
+  digital: 8
+  heavy_german: -12
+  quality: 10
+  required_experience: 0
+ai:
+  enabled: false

@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+.git
+.venv
+**/__pycache__
+**/*.pyc
+*.db
+*.db.bak
+*.sqlite3
+config/qualifications.yaml
+worktmp
+private
+tests
+attachments

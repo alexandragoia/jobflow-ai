@@ -1,0 +1,52 @@
+shift_type:
+  daytime: ['Tagschicht', 'feste Tagesarbeitszeiten', 'keine Schichtarbeit', '08:00\s*[–-]\s*16:30']
+  two_shift: ['2[- ]Schicht', 'Zweischicht', 'Früh[- /]Spät']
+  three_shift: ['3[- ]Schicht', 'Dreischicht']
+  night: ['Nachtschicht', 'Nachtdienst', 'Nachtarbeit']
+customer_contact:
+  none: ['kein(?:en|e)? Kundenkontakt', 'ohne Kundenkontakt']
+  low: ['wenig Kundenkontakt', 'geringer Kundenkontakt']
+  high: ['ständiger Kundenkontakt', 'intensiver Kundenkontakt', 'tägliche Kundenbetreuung']
+phone_intensity:
+  0: ['keine Telefonarbeit', 'ohne Telefonarbeit']
+  1: ['gelegentliche interne Telefonate']
+  2: ['begrenzte Telefonarbeit']
+  3: ['häufige Telefonate', 'regelmäßige Telefonarbeit']
+  4: ['Telefonie als Hauptaufgabe']
+  5: ['Outbound', 'Kaltakquise', 'Call[- ]Center']
+physical_demand:
+  low: ['leichte Unterstützung', 'keine körperliche Belastung', 'körperlich leichte Arbeit']
+  high: ['schwere körperliche Arbeit', 'körperlich anstrengend', 'schweres Heben']
+education_requirement:
+  preferred: ['Ausbildung.*?(?:von Vorteil|wünschenswert)', 'Studium.*?wünschenswert']
+  mandatory: ['(?:abgeschlossene )?(?:Berufs)?Ausbildung.*?(?:erforderlich|zwingend|Voraussetzung)', 'Studium.*?(?:erforderlich|zwingend)', 'Führerschein.*?erforderlich', 'Lizenz.*?erforderlich']
+  none: ['keine Ausbildung erforderlich']
+quereinsteiger:
+  'yes': ['Quereinsteiger.*?(?:willkommen|geeignet|möglich)', 'auch ohne Ausbildung']
+training_provided:
+  'yes': ['Einarbeitung', 'Schulung wird', 'Training provided']
+remote_type:
+  hybrid: ['hybrid', 'teilweise Homeoffice', 'Homeoffice möglich']
+  remote: ['100\s*%\s*(?:Homeoffice|remote)', 'vollständig remote']
+  onsite: ['ausschließlich vor Ort']
+language_level:
+  A2: ['Deutsch.*?\bA2\b']
+  B1: ['Deutsch.*?\bB1\b']
+  B2: ['Deutsch.*?\bB2\b']
+  C1: ['Deutsch.*?\bC1\b']
+  C2: ['Deutsch.*?\bC2\b']
+weekend_work:
+  'no': ['keine Wochenendarbeit', 'ohne Wochenendarbeit']
+  'yes': ['gelegentliche Wochenendarbeit', 'Arbeit am Wochenende']
+task_category:
+  quality: ['Qualitätskontrolle', 'Qualitätssicherung']
+  data: ['Datenerfassung', 'Datenpflege', 'Daten bearbeiten']
+  coordination: ['Terminkoordination', 'Personaladministration', 'Recruiting-Administration']
+  office: ['Büroarbeiten', 'Backoffice', 'administrative Aufgaben', 'Dokumentation', 'Sachbearbeitung']
+  care: ['Alltagsbegleitung', 'leichte Unterstützung', 'Betreuung von']
+  cleaning: ['Reinigung von', 'Reinigungsarbeiten']
+  warehouse: ['Kommissionierung', 'Lagerarbeiten', 'Waren einlagern']
+  reception: ['Empfang von Besuchern', 'Rezeption betreuen']
+  sales: ['Kaltakquise', 'Neukundenakquise', 'Outbound-Vertrieb']
+digital_tools:
+  'yes': ['Arbeit mit Excel', 'digitalen Tools', 'Automatisierung', 'SEO', 'E-Commerce']

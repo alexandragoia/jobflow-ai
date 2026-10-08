@@ -1,0 +1,31 @@
+night_shift:
+  - Nachtschicht
+  - Nachtarbeit
+  - Nachtdienst
+three_shift:
+  - 3-Schicht
+  - Dreischicht
+  - Drei-Schicht-System
+  - '3\s*[- ]\s*Schicht'
+german_too_high:
+  - Deutsch C1 erforderlich
+  - Deutschkenntnisse C1 erforderlich
+  - Deutsch C2 erforderlich
+  - Deutschkenntnisse C2 erforderlich
+  - muttersprachliche Deutschkenntnisse erforderlich
+  - 'Deutsch(?:kenntnisse)?[^.\n]{0,50}\b(?:C1|C2)\b[^.\n]{0,40}(?:erforderlich|zwingend|Voraussetzung|benötigt)'
+  - '(?:C1|C2)[^.\n]{0,20}Deutsch[^.\n]{0,40}(?:erforderlich|zwingend|Voraussetzung)'
+call_center_sales:
+  - Call Center Agent
+  - Call-Center-Agent
+  - Kaltakquise
+  - Outbound-Vertrieb
+  - telefonische Neukundenakquise
+mandatory_qualification:
+  - abgeschlossene Ausbildung erforderlich
+  - abgeschlossene Berufsausbildung erforderlich
+  - Studium erforderlich
+  - Führerschein erforderlich
+  - Lizenz erforderlich
+  - '(?:abgeschlossene )?(?:Berufs)?Ausbildung[^.\n]{0,60}(?:erforderlich|zwingend|Voraussetzung)'
+  - '(?:Studium|Führerschein|Lizenz|Zertifikat)[^.\n]{0,40}(?:erforderlich|zwingend|Voraussetzung)'
