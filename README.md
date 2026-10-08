@@ -6,6 +6,22 @@ Persönliches Portfolio-Projekt mit **Python · FastAPI · SQLAlchemy · SQLite 
 
 [Architektur](docs/architecture.md) · [Demo-Anleitung](docs/demo.md) · [Text für den Lebenslauf](docs/cv.md) · [Datenmodell](DATA_MODEL.md)
 
+## Einblicke in die Anwendung
+
+Die folgenden Bilder zeigen die originale Oberfläche mit erfundenen Stellenanzeigen und einer fiktiven Favoritenliste. Für die Aufnahmen wurden Ergebnisse der lokalen Demo in einer eigenständigen Ansicht dargestellt. Es wurden keine privaten Angebote oder Notizen verwendet. Die Oberfläche ist derzeit auf Spanisch.
+
+### Suche und Filter
+
+![Suchformular mit Suchbegriffen, Radius, Veröffentlichungszeitraum und Arbeitszeit](docs/screenshots/search.png)
+
+### Bewertung mit Textbelegen
+
+![Erfundene Bürohilfe-Anzeige mit Bewertung und nachvollziehbaren Textbelegen](docs/screenshots/results.png)
+
+### Gespeicherte Stellen und Interesse
+
+![Fiktive Favoritenliste mit Zählern für gespeicherte, interessante und abgelehnte Stellen](docs/screenshots/library.png)
+
 ## Ausgangspunkt
 
 Eine Suche nach Stichwörtern liefert häufig Stellenanzeigen, die einen Beruf erwähnen, aber nicht zum gesuchten Tätigkeitsbereich passen. Angaben zu Arbeitszeiten, Sprachkenntnissen, Erfahrung oder Standort können fehlen. JobFlow verbindet ausdrückliche Filter, Übereinstimmungen im Stellentitel und eine nachvollziehbare Bewertung. Die Entscheidung trifft die arbeitssuchende Person.
@@ -84,7 +100,6 @@ Anforderungen und Produktentscheidungen entstanden aus einer persönlichen Suche
 - Die Anpassung an Rückmeldungen schlägt Regeländerungen vor. Es wird kein persönliches KI-Modell trainiert.
 - Die Anwendung ist für eine Person ausgelegt. Online-Zugang und dauerhafte Speicherung sind im Code vorbereitet; Veröffentlichung und Prüfung eines Online-Betriebs stehen noch aus.
 - Vorhandene Tests verwenden Beispieldaten und simulierte API-Aufrufe. Die enthaltenen Tests belegen keine vollständige Prüfung sämtlicher später ergänzter Funktionen.
-- Die lokale Demo konnte in der aktuellen Browser-Sitzung nicht geöffnet werden. Deshalb enthält diese Präsentation noch keine Bildschirmfotos der Anwendung.
 
 ## Projektstruktur
 
